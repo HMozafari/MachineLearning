@@ -117,5 +117,18 @@ def predict_sequences_multiple(model, data, window_size, prediction_len):
             predicted.append(model.predict(curr_frame[newaxis, :, :])[0, 0])
             curr_frame = curr_frame[1:]
             curr_frame = np.insert(curr_frame, [window_size - 1], predicted[-1], axis=0)
+
         prediction_seqs.append(predicted)
+
     return prediction_seqs
+
+def mean_square_error (predicted, actual):
+    k =0
+    Sigm_Error = 0
+    for i in range(len(predicted)):
+        for j in range (len(predicted[i]) ):
+            error = predicted[i][j] - actual[k]
+            squar_error = error **2
+            Sigm_Error += squar_error
+            k +=1
+    return Sigm_Error/len(actual)
